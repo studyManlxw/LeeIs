@@ -1,0 +1,25 @@
+server:
+  port: 8081
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/lee's-hole?useSSL=false&serverTimezone=UTC
+    username: root
+    password: 3320
+  mvc:
+#    适配knif4j的mvc路径
+#    pathmatch:
+#      matching-strategy: ANT_PATH_MATCHER
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 查看日志
+wx:
+  mp:
+    appId: wx05c57d1e575c7d90
+    secret: a79d0389fa04612d91cd29b53b405f3e
+    # 授权回调获取用户信息接口地址
+    userInfoUrl:  http://a7zpyt.natappfree.cc/wechat/userInfo
+    menuButtonUrl: http://maverick.nat300.top

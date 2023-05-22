@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dhl.mapper.ClerkMapper">
+    <resultMap id="ClerksInfo" type="com.dhl.model.vo.ShowClerkInfo">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="sex" column="sex"/>
+        <result property="position" column="position"/>
+        <result property="status" column="status"/>
+        <result property="avatar" column="avatar"/>
+        <result property="level" column="level"/>
+        <collection property="labelList" ofType="com.dhl.model.entity.ClerkLabel">
+            <result property="id" column="id"/>
+            <result property="clerkId" column="clerkId"/>
+            <result property="label" column="label"/>
+        </collection>
+    </resultMap>
+
+    <select id="showClerkInfo" resultMap="ClerksInfo" parameterType="com.dhl.model.vo.ShowClerkInfo">
+        SELECT sc.id,sc.age,sc.`name`,sc.sex,sc.position,sc.`level`,sc.`status`,sc.avatar,sc.voice,scl.label FROM `sys_clerk` sc INNER JOIN sys_clerk_label scl ON sc.id= scl.clerk_id
+    </select>
+
+
+
+    <resultMap id="ClerkInfoMap" type="com.dhl.model.entity.Clerk">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="sex" column="sex"/>
+        <result property="position" column="position"/>
+        <result property="status" column="status"/>
+        <result property="avatar" column="avatar"/>
+        <result property="level" column="level"/>
+        <collection property="labelId" ofType="com.dhl.model.entity.ClerkLabel">
+            <result property="id" column="id"/>
+            <result property="clerkId" column="clerkId"/>
+            <result property="label" column="label"/>
+        </collection>
+        <collection property="imagePath" ofType="com.dhl.model.entity.ClerkImage">
+            <result property="id" column="id"/>
+            <result property="clerkId" column="clerkId"/>
+            <result property="imagePath" column="imagePath"/>
+        </collection>
+     </resultMap>
+
+    <select id="findClerkInfoById" resultMap="ClerkInfoMap" parameterType="com.dhl.model.vo.ClerkVo">
+        SELECT
+            sc.id,sc.age,sc.`name`,sc.sex,sc.position,sc.`level`,sc.`status`,sc.avatar,sc.voice,scl.label,sci.image_path
+        FROM `sys_clerk` AS sc
+                 LEFT  JOIN sys_clerk_label AS scl ON sc.id= scl.clerk_id and sc.id = #{id}
+                 LEFT JOIN sys_clerk_image AS sci ON sc.id = sci.clerk_id and sc.id = #{id}
+    </select>
+
+</mapper>
